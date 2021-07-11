@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { TextInput } from "react-native-paper";
-
+import Colors from "../utils/Colors";
 function RoundedButton({
   style = {},
   textStyle = {},
@@ -26,17 +26,18 @@ export default RoundedButton;
 const styles = (size) =>
   StyleSheet.create({
     btn: {
-      backgroundColor: "black",
+      backgroundColor: Colors.bgColor,
       width: size,
       height: size,
-      color: "#fff",
+      color: Colors.textColor,
       borderRadius: size / 2,
-      borderColor: "#fff",
+      borderColor: Colors.textColor,
       borderWidth: 2,
       justifyContent: "center",
       alignItems: "center",
     },
     btnText: {
-      color: "white",
+      color: Colors.textColor,
+      fontSize: size / 4,
     },
   });

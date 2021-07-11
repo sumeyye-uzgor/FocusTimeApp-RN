@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: Constants.statusBarHeight + 80,
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#fff",
   },
   focusContainer: {
     flex: 1,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { TextInput } from "react-native-paper";
 import RoundedButton from "../../components/RoundedButton";
+import Colors from "../../utils/Colors";
 
 function Focus({ addFocusSubject }) {
   const [focusItem, setFocusItem] = useState(null);
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color: Colors.textColor,
   },
   inputContainer: {
     flex: 1,

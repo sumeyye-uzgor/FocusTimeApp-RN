@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { TextInput } from "react-native-paper";
 import RoundedButton from "../../components/RoundedButton";
+import Colors from "../../utils/Colors";
 
 function Timer({ focusSubject, setFocusSubject }) {
   return (
@@ -26,14 +27,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    textAlign: "center",
+    color: Colors.textColor,
   },
   timer: {
     marginTop: 30,
     fontSize: 120,
-    backgroundColor: "rgba( 210, 30, 50, 0.3 )",
+    backgroundColor: Colors.bgColor,
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
+    color: Colors.textColor,
   },
   inputContainer: {
     flex: 1,
