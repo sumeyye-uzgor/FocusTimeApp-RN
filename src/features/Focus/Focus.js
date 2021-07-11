@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { TextInput } from "react-native-paper";
-import RoundedButton from "../components/RoundedButton";
+import RoundedButton from "../../components/RoundedButton";
 
 function Focus({ addFocusSubject }) {
   const [focusItem, setFocusItem] = useState(null);
