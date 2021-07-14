@@ -12,8 +12,8 @@ const convertMilisToMinStr = (milis) => {
   return str;
 };
 
-function CountDownTimer({ minutes = 1, isPaused = true, onProgress }) {
-  const [milis, setMilis] = useState(convertMinToMilis(minutes));
+function CountDownTimer({ minutes, isPaused = true, onProgress }) {
+  const [milis, setMilis] = useState();
   const interval = useRef(null);
   const countDown = () => {
     setMilis((time) => {
@@ -25,6 +25,9 @@ function CountDownTimer({ minutes = 1, isPaused = true, onProgress }) {
       }
     });
   };
+  useEffect(() => {
+    setMilis(convertMinToMilis(minutes));
+  }, [minutes]);
   useEffect(() => {
     if (isPaused) {
       if (interval.current) clearInterval(interval.current);
@@ -42,8 +45,8 @@ const styles = StyleSheet.create({
   timer: {
     marginTop: 30,
     fontSize: 120,
+    borderRadius: 10,
     backgroundColor: Colors.bgColor,
-    borderRadius: 50,
     borderColor: Colors.textColor,
     borderWidth: 2,
     fontWeight: "bold",

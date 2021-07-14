@@ -4,17 +4,30 @@ import { ProgressBar } from "react-native-paper";
 import RoundedButton from "../../components/RoundedButton";
 import Colors from "../../utils/Colors";
 import CountDownTimer from "../../components/CountDownTimer";
+import Timing from "./Timing";
+import { useKeepAwake } from "expo-keep-awake";
 
 function Timer({ focusSubject, setFocusSubject }) {
+  useKeepAwake();
+  const [minutes, setMinutes] = useState(20);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
   const onProgress = (progress) => {
     setProgress(progress);
   };
+  const handleTiming = (min) => {
+    setMinutes(min);
+    setProgress(1);
+    setIsStarted(false);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.timeContainer}>
-        <CountDownTimer isPaused={!isStarted} onProgress={onProgress} />
+        <CountDownTimer
+          isPaused={!isStarted}
+          onProgress={onProgress}
+          minutes={minutes}
+        />
         <Text style={styles.subtitle}>Let's Focus On:</Text>
         <Text style={styles.title}>{focusSubject}</Text>
       </View>
@@ -24,6 +37,9 @@ function Timer({ focusSubject, setFocusSubject }) {
           style={{ backgroundColor: Colors.progressColor, height: 6 }}
           progress={progress}
         />
+        <View style={styles.timingContainer}>
+          <Timing handleTiming={handleTiming} />
+        </View>
         <View style={styles.buttonContainer}>
           {!isStarted ? (
             <RoundedButton text="Start" onPress={() => setIsStarted(true)} />
@@ -44,31 +60,36 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   subtitle: {
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
     color: Colors.textColor,
   },
   title: {
-    fontSize: 46,
+    fontSize: 40,
     fontWeight: "bold",
     textAlign: "center",
     color: Colors.textColor,
   },
   buttonContainer: {
-    flex: 0.6,
+    flex: 0.5,
     flexDirection: "row",
     marginTop: 50,
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-around",
   },
   timeContainer: {
-    flex: 0.6,
+    flex: 0.5,
     flexDirection: "column",
     justifyContent: "space-around",
   },
   progressContainer: {
-    flex: 0.4,
+    flex: 0.5,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  timingContainer: {
+    flex: 0.5,
     flexDirection: "column",
     justifyContent: "center",
   },
