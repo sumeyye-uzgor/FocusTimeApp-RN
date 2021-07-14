@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
+import { Text, View, StyleSheet, Vibration, Platform } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import RoundedButton from "../../components/RoundedButton";
 import Colors from "../../utils/Colors";
@@ -20,6 +20,20 @@ function Timer({ focusSubject, setFocusSubject }) {
     setProgress(1);
     setIsStarted(false);
   };
+  const handleVibration = () => {
+    if (Platform.OS === "ios") {
+      const interval = setInterval(() => Vibration.vibrate(), 1000);
+      setTimeout(() => clearInterval(interval), 2000);
+    } else {
+      Vibration.vibrate(2000);
+    }
+  };
+  const onEnd = () => {
+    setMinutes(20);
+    setProgress(1);
+    setIsStarted(false);
+    handleVibration();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.timeContainer}>
@@ -27,6 +41,7 @@ function Timer({ focusSubject, setFocusSubject }) {
           isPaused={!isStarted}
           onProgress={onProgress}
           minutes={minutes}
+          onEnd={onEnd}
         />
         <Text style={styles.subtitle}>Let's Focus On:</Text>
         <Text style={styles.title}>{focusSubject}</Text>

@@ -12,12 +12,13 @@ const convertMilisToMinStr = (milis) => {
   return str;
 };
 
-function CountDownTimer({ minutes, isPaused = true, onProgress }) {
+function CountDownTimer({ minutes, isPaused = true, onProgress, onEnd }) {
   const [milis, setMilis] = useState();
   const interval = useRef(null);
   const countDown = () => {
     setMilis((time) => {
       if (time === 0) {
+        onEnd();
         return time;
       } else {
         // onProgress((time - 1000) / convertMinToMilis(minutes));

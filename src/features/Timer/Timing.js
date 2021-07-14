@@ -5,7 +5,7 @@ import RoundedButton from "../../components/RoundedButton";
 function Timing({ handleTiming }) {
   return (
     <View style={styles.buttonContainer}>
-      <RoundedButton text="1" size={100} onPress={() => handleTiming(1)} />
+      <RoundedButton text="0.1" size={100} onPress={() => handleTiming(0.1)} />
       <RoundedButton text="15" size={100} onPress={() => handleTiming(15)} />
       <RoundedButton text="20" size={100} onPress={() => handleTiming(20)} />
       <RoundedButton text="30" size={100} onPress={() => handleTiming(30)} />
