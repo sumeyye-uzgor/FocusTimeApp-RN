@@ -7,7 +7,7 @@ import CountDownTimer from "../../components/CountDownTimer";
 import Timing from "./Timing";
 import { useKeepAwake } from "expo-keep-awake";
 
-function Timer({ focusSubject, setFocusSubject }) {
+function Timer({ focusSubject, onTimerEnd }) {
   useKeepAwake();
   const [minutes, setMinutes] = useState(20);
   const [isStarted, setIsStarted] = useState(false);
@@ -33,6 +33,7 @@ function Timer({ focusSubject, setFocusSubject }) {
     setProgress(1);
     setIsStarted(false);
     handleVibration();
+    onTimerEnd();
   };
   return (
     <View style={styles.container}>
@@ -61,7 +62,7 @@ function Timer({ focusSubject, setFocusSubject }) {
           ) : (
             <RoundedButton text="Pause" onPress={() => setIsStarted(false)} />
           )}
-          <RoundedButton text="Stop" onPress={() => setFocusSubject(null)} />
+          <RoundedButton text="Stop" onPress={() => onTimerEnd()} />
         </View>
       </View>
     </View>
