@@ -1,24 +1,37 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
-import { TextInput } from "react-native-paper";
+import { ProgressBar } from "react-native-paper";
 import RoundedButton from "../../components/RoundedButton";
 import Colors from "../../utils/Colors";
 import CountDownTimer from "../../components/CountDownTimer";
+
 function Timer({ focusSubject, setFocusSubject }) {
   const [isStarted, setIsStarted] = useState(false);
+  const [progress, setProgress] = useState(1);
+  const onProgress = (progress) => {
+    setProgress(progress);
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>Let's Focus On:</Text>
-      <Text style={styles.title}>{focusSubject}</Text>
-      <CountDownTimer isPaused={!isStarted} />
-
-      <View style={styles.buttonContainer}>
-        {!isStarted ? (
-          <RoundedButton text="Start" onPress={() => setIsStarted(true)} />
-        ) : (
-          <RoundedButton text="Pause" onPress={() => setIsStarted(false)} />
-        )}
-        <RoundedButton text="Stop" onPress={() => setFocusSubject(null)} />
+      <View style={styles.timeContainer}>
+        <CountDownTimer isPaused={!isStarted} onProgress={onProgress} />
+        <Text style={styles.subtitle}>Let's Focus On:</Text>
+        <Text style={styles.title}>{focusSubject}</Text>
+      </View>
+      <View style={styles.progressContainer}>
+        <ProgressBar
+          color={Colors.textColor}
+          style={{ backgroundColor: Colors.progressColor, height: 6 }}
+          progress={progress}
+        />
+        <View style={styles.buttonContainer}>
+          {!isStarted ? (
+            <RoundedButton text="Start" onPress={() => setIsStarted(true)} />
+          ) : (
+            <RoundedButton text="Pause" onPress={() => setIsStarted(false)} />
+          )}
+          <RoundedButton text="Stop" onPress={() => setFocusSubject(null)} />
+        </View>
       </View>
     </View>
   );
@@ -31,24 +44,32 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   subtitle: {
-    flex: 0.1,
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
     color: Colors.textColor,
   },
   title: {
-    flex: 0.3,
     fontSize: 46,
     fontWeight: "bold",
     textAlign: "center",
     color: Colors.textColor,
   },
   buttonContainer: {
-    flex: 1,
+    flex: 0.6,
     flexDirection: "row",
     marginTop: 50,
     alignItems: "center",
     justifyContent: "space-around",
+  },
+  timeContainer: {
+    flex: 0.6,
+    flexDirection: "column",
+    justifyContent: "space-around",
+  },
+  progressContainer: {
+    flex: 0.4,
+    flexDirection: "column",
+    justifyContent: "center",
   },
 });

@@ -12,7 +12,7 @@ const convertMilisToMinStr = (milis) => {
   return str;
 };
 
-function CountDownTimer({ minutes = 20, isPaused = true }) {
+function CountDownTimer({ minutes = 1, isPaused = true, onProgress }) {
   const [milis, setMilis] = useState(convertMinToMilis(minutes));
   const interval = useRef(null);
   const countDown = () => {
@@ -20,12 +20,14 @@ function CountDownTimer({ minutes = 20, isPaused = true }) {
       if (time === 0) {
         return time;
       } else {
+        // onProgress((time - 1000) / convertMinToMilis(minutes));
         return time - 1000;
       }
     });
   };
   useEffect(() => {
     if (isPaused) {
+      if (interval.current) clearInterval(interval.current);
       return;
     }
     interval.current = setInterval(countDown, 1000);
