@@ -1,27 +1,33 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import Constants from "expo-constants";
+import { Text, View, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import RoundedButton from "../../components/RoundedButton";
 import Colors from "../../utils/Colors";
-
-export default function FocusList({ subjectsArray }) {
+const HistoryItem = ({ item }) => {
+  return <Text style={textStyles(item.isComplete).text}>{item.title}</Text>;
+};
+export default function FocusList({ focusHistory, onClear }) {
   return (
-    <View style={styles.container}>
-      {subjectsArray ? (
-        subjectsArray.map((sub, idx) => (
-          <Text style={styles.text} key={idx}>
-            {sub}
-          </Text>
-        ))
-      ) : (
-        <Text style={styles.text}>Nothing to show here!</Text>
+    <SafeAreaView style={styles.container}>
+      {!!focusHistory.length && (
+        <>
+          <Text style={styles.text}>Things we've focused on</Text>
+          <FlatList
+            style={{ flex: 1 }}
+            contentContainerStyle={{ alignItems: "center" }}
+            data={focusHistory}
+            renderItem={HistoryItem}
+          />
+          <RoundedButton text="Clear" onPress={() => onClear()} />
+        </>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = {
   container: {
     flex: 0.7,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -30,3 +36,10 @@ const styles = {
     color: Colors.textColor,
   },
 };
+
+const textStyles = (isSuccess) => ({
+  text: {
+    fontSize: 30,
+    color: isSuccess ? Colors.successColor : Colors.failColor,
+  },
+});

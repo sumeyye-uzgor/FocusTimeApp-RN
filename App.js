@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import uuid from "react-native-uuid";
 import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import { Card } from "react-native-paper";
@@ -8,24 +9,40 @@ import Timer from "./src/features/Timer/Timer";
 
 export default function App() {
   const [focusSubject, setFocusSubject] = useState(null);
-  const [subjectsArray, setSubjectsArrray] = useState(null);
+  const [focusHistory, setFocusHistory] = useState([]);
+
   function addFocusSubject(focusItem) {
-    setFocusSubject(focusItem);
-    setSubjectsArrray(
-      subjectsArray ? [...subjectsArray, focusSubject] : [focusSubject]
+    const id = uuid.v4();
+    setFocusSubject({ title: focusItem, isComplete: false, id: id });
+    setFocusHistory([
+      ...focusHistory,
+      { title: focusItem, isComplete: false, id: id },
+    ]);
+  }
+  function focusEndSuccess(id) {
+    setFocusSubject(null);
+    setFocusHistory(
+      focusHistory.map((subject) =>
+        subject.id === id ? { ...subject, isComplete: true } : subject
+      )
     );
   }
+
   return (
     <View style={styles.container}>
       {focusSubject ? (
         <Timer
-          focusSubject={focusSubject}
+          focusSubject={focusSubject.title}
           onTimerEnd={() => setFocusSubject(null)}
+          focusEndSuccess={() => focusEndSuccess(focusSubject.id)}
         />
       ) : (
         <View style={styles.focusContainer}>
           <Focus addFocusSubject={addFocusSubject} />
-          <FocusList subjectsArray={subjectsArray} />
+          <FocusList
+            focusHistory={focusHistory}
+            onClear={() => setFocusHistory([])}
+          />
         </View>
       )}
     </View>
@@ -41,5 +58,7 @@ const styles = StyleSheet.create({
   },
   focusContainer: {
     flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 });

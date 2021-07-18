@@ -28,6 +28,9 @@ function Focus({ addFocusSubject }) {
 export default Focus;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 0.2,
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",

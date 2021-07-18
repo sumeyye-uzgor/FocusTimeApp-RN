@@ -7,7 +7,7 @@ import CountDownTimer from "../../components/CountDownTimer";
 import Timing from "./Timing";
 import { useKeepAwake } from "expo-keep-awake";
 
-function Timer({ focusSubject, onTimerEnd }) {
+function Timer({ focusSubject, onTimerEnd, focusEndSuccess }) {
   useKeepAwake();
   const [minutes, setMinutes] = useState(20);
   const [isStarted, setIsStarted] = useState(false);
@@ -33,7 +33,7 @@ function Timer({ focusSubject, onTimerEnd }) {
     setProgress(1);
     setIsStarted(false);
     handleVibration();
-    onTimerEnd();
+    focusEndSuccess();
   };
   return (
     <View style={styles.container}>
