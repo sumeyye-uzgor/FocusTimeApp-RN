@@ -38,7 +38,6 @@ export default function App() {
     try {
       const history = await AsyncStorage.getItem("focusHistory");
       if (history && JSON.parse(history).length) {
-        console.log("hre is if");
         setFocusHistory(JSON.parse(history));
       }
     } catch (e) {

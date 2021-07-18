@@ -17,18 +17,18 @@ function CountDownTimer({ minutes, isPaused = true, onProgress, onEnd }) {
   const interval = useRef(null);
   const countDown = () => {
     setMilis((time) => {
-      if (time === 0) {
-        onEnd();
-        return time;
-      } else {
-        // onProgress((time - 1000) / convertMinToMilis(minutes));
-        return time - 1000;
-      }
+      return time === 0 ? time : time - 1000;
     });
   };
   useEffect(() => {
     setMilis(convertMinToMilis(minutes));
   }, [minutes]);
+  useEffect(() => {
+    if (milis === 0) {
+      onEnd();
+    }
+    onProgress(milis / convertMinToMilis(minutes));
+  }, [milis]);
   useEffect(() => {
     if (isPaused) {
       if (interval.current) clearInterval(interval.current);
