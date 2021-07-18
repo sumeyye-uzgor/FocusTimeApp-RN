@@ -17,7 +17,7 @@ export default function FocusList({ focusHistory, onClear }) {
             data={focusHistory}
             renderItem={HistoryItem}
           />
-          <RoundedButton text="Clear" onPress={() => onClear()} />
+          <RoundedButton text="Clear" onPress={onClear} />
         </>
       )}
     </SafeAreaView>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import uuid from "react-native-uuid";
 import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import { Card } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Focus from "./src/features/Focus/Focus";
 import FocusList from "./src/features/Focus/FocusList";
 import Timer from "./src/features/Timer/Timer";
@@ -27,7 +27,30 @@ export default function App() {
       )
     );
   }
-
+  const saveFocusHistory = async () => {
+    try {
+      await AsyncStorage.setItem("focusHistory", JSON.stringify(focusHistory));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const loadFocusHistory = async () => {
+    try {
+      const history = await AsyncStorage.getItem("focusHistory");
+      if (history && JSON.parse(history).length) {
+        console.log("hre is if");
+        setFocusHistory(JSON.parse(history));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    loadFocusHistory();
+  }, []);
+  useEffect(() => {
+    saveFocusHistory();
+  }, [focusHistory]);
   return (
     <View style={styles.container}>
       {focusSubject ? (
